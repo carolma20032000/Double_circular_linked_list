@@ -66,6 +66,22 @@ void insert_head(NODE** head, int data) {
 	*head = new_node;
 }
 
+void insert_middle(NODE** head, int data_after, int data) {
+	NODE* new_node = create_node(data);
+	new_node->data = data;
+	NODE* temp = *head;
+	NODE* data_after_node;
+	while (temp->data != data_after) {
+		temp = temp->next;
+	}
+	data_after_node = temp;
+	new_node->next = data_after_node->next;
+	new_node->prev = data_after_node;
+	data_after_node->next = new_node;
+	new_node->next->prev = new_node;
+	return;
+}
+
 int main() {
 	//create a double linked list first.
 	int data;
@@ -74,7 +90,10 @@ int main() {
 	insert_end(&head, 5);
 	display(head);
 
-	insert_head(&head, 7);
+	insert_before_head(&head, 7);
+	display(head);
+
+	insert_middle(&head, 7, 2);
 	display(head);
 
 	return 0;
